@@ -126,6 +126,9 @@ These apply to every FSE project, regardless of stack.
 5. **The self-healing build loop runs after every change.** No exceptions.
 6. **Never commit with a broken build.**
 7. **Credentials are never output, logged, or committed.** Ever.
+8. **Token-First Construction.** No UI ships without project-defined design tokens. Every visual CSS value — color, spacing, radius, shadow, font-size — must reference a token variable defined by the project (e.g., `--fse-*`, `--cc-*`, `--br-*`). Hard-coded literals (hex, rgb, named colors, raw px values) outside the project's token definition file are build-fails. Pre-existing violations are recorded in `fse-style-baseline.json` and resolved when the file is next modified — the baseline is a one-way ratchet that only shrinks.
+9. **Pattern-First Design.** No UI element is built in isolation. Before writing new component CSS or markup, consult `FSE_UI.md` for an existing pattern. If a pattern exists, it must be used. If a new pattern is required, it is proposed during the PLAN phase, added to `FSE_UI.md`, and only then implemented. The session does not close until `FSE_UI.md` reflects every component introduced.
+10. **Visual Validation Phase.** Every session that touches UI ends with a Visual Validation step inside VALIDATE. Each modified page is compared against the relevant patterns in `FSE_UI.md`. Any drift is either resolved before commit or recorded explicitly in `FSE_STATE.md` as accepted technical debt with justification. Visual validation is a named phase, not a habit.
 
 Stack-specific standing orders go in the "Project-Specific Standing Orders" section below, or in a stack extension file.
 
