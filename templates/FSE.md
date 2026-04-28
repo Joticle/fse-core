@@ -121,8 +121,8 @@ These apply to every FSE project, regardless of stack.
 
 1. **No stubs, TODOs, placeholders, or incomplete implementations.** If it isn't finished, it doesn't get written.
 2. **No snippets or partial code.** Output complete file contents every time.
-3. **Never assume file contents.** Always read the current file or ask before modifying.
-4. **Never change styling or functionality outside the current task scope.** Surface adjacent issues; do not silently fix them.
+3. **Never assume file contents or existence.** Always read the current file, or list the directory, or ask before modifying or referencing any file.
+4. **Never change styling, functionality, or configuration outside the current task scope.** Implicit refactors — cleaning up imports, reorganizing DI registrations, "while I'm here" tweaks — are protocol violations. Surface adjacent issues; do not silently fix them.
 5. **The self-healing build loop runs after every change.** No exceptions.
 6. **Never commit with a broken build.**
 7. **Credentials are never output, logged, or committed.** Ever.
