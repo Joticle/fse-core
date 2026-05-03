@@ -112,10 +112,11 @@ Add a Tier 2 file when:
 
 The ~15KB cap applies to bedrock methodology files (`FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md`, and other Tier 2 reference docs) — not to source code files. Source files split based on cohesion and module boundaries; methodology files split based on context-window cost.
 
-### Tier 3 — Optional
+### Tier 3 — Optional / Aged-Out
 - **BUILD_LOG_*.md** — Long-form logs of significant builds or migrations.
 - **AUDIT_REPORT.md** — Point-in-time audits.
 - **CHANGELOG.md** — User-facing change history.
+- **Archived session reports** — Reports moved out of `/sessions/active/` into `/sessions/archive/YYYY-MM/` once superseded by newer artifacts. See Session Numbering & Artifact Lifecycle below.
 
 ## Universal Standing Orders
 
@@ -133,6 +134,65 @@ These apply to every FSE project, regardless of stack.
 10. **Visual Validation Phase.** Every session that touches UI ends with a Visual Validation step inside VALIDATE. Each modified page is compared against the relevant patterns in `FSE_UI.md`. Any drift is either resolved before commit or recorded explicitly in `FSE_STATE.md` as accepted technical debt with justification. Visual validation is a named phase, not a habit.
 
 Stack-specific standing orders go in the "Project-Specific Standing Orders" section below, or in a stack extension file.
+
+## Session Numbering & Artifact Lifecycle
+
+Sessions are numbered. Session artifacts have a lifecycle. Both are universal across FSE projects.
+
+### Session Numbering
+
+Every CLI session is numbered sequentially across the project's lifetime as `SESSION_NN` (zero-padded 2-digit; expand to 3 digits past 99). Numbering is project-local — each project starts at `SESSION_01` and counts independently.
+
+- A session is one CLI invocation that runs to completion (success, partial completion, or clean stop).
+- Numbers are sequential and never reused. Failed or reverted sessions still consume a number.
+- Session numbers persist across branches and phases. They count CLI runs, not git operations.
+
+The session number appears in:
+- **Prompt headers** — `SESSION 08 — PHASE 1 RUN 2: <SCOPE>`
+- **Report filenames** — `SESSION_08_PHASE_1_RUN_2_REPORT.md`
+- **Commit messages** — `[FSE] Session 8 Phase 1 Run 2: <what shipped>`
+- **`FSE_STATE.md` session log** — see schema below
+
+The term "overnight run" is dropped. Replace with "session" or "unattended session." Sessions happen at all hours.
+
+### Artifact Lifecycle
+
+Session reports and other CLI-generated artifacts move through two phases. The Tier scheme above describes *what* a document is; the Lifecycle describes *where it lives based on age and relevance*.
+
+**Active** — `/sessions/active/`
+- New session reports are born here.
+- Reports stay in Active while the work is in flight or recently relevant.
+- Sessions read Active artifacts during VERIFY when they need recent context.
+
+**Archived** — `/sessions/archive/YYYY-MM/`
+- Reports move here when superseded by newer artifacts.
+- Organized by year-month (the month the work was originally completed) for predictable retrieval.
+- Once archived, a report is Tier 3 historical reference.
+
+Bedrock files (`FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md`, `CLAUDE.md` thin pointer, `README.md`) live at the repo root and never move. Only `.md` files predating this methodology are grandfathered at the root — migration is a separate, explicit decision per project.
+
+### Mandatory Hygiene Steps
+
+**At session start (during VERIFY):**
+- Confirm `/sessions/active/` and `/sessions/archive/` exist; create if missing.
+- Verify the repo root has not accumulated stray `.md` files since the last session (excluding bedrock + grandfathered).
+
+**At session end (during VALIDATE):**
+1. Place the new session report in `/sessions/active/`.
+2. Identify any reports in Active that have been superseded by newer work.
+3. Move superseded reports to `/sessions/archive/YYYY-MM/`.
+4. Update `FSE_STATE.md` session log table.
+5. Verify repo root contains only Tier 1 bedrock files (plus grandfathered).
+
+### `FSE_STATE.md` Session Log Schema
+
+Every project's `FSE_STATE.md` includes a session log table with these columns:
+
+| Session | Date | Branch | Scope | Outcome | Report |
+|---------|------|--------|-------|---------|--------|
+| SESSION_01 | 2026-MM-DD | main | <scope summary> | <success/partial/reverted> | `sessions/active/SESSION_01_*.md` or `sessions/archive/YYYY-MM/SESSION_01_*.md` |
+
+The Report column is a relative path that updates when the report moves from Active to Archived.
 
 <!-- =================================================================== -->
 <!-- FSE END                                                             -->
