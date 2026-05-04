@@ -217,6 +217,30 @@ The Report column is a relative path that updates when the report moves from Act
 3. Unprefixed commits that don't cluster cleanly into an adjacent session form a new synthesized session. Synthesized identifiers follow the project's existing scheme (e.g., a new `2E.1` between `2E` and `2F` in a hierarchical project).
 4. Reconstructed entries are flagged in the Report column as `(reconstructed — no original report)`. Sessions with original reports preserved (e.g., entries already in `SESSION_STATE.md`) reference those instead.
 
+### Phased Adoption
+
+A project mid-flight on existing work does not have to adopt the full methodology in one batch. Phased adoption is permitted and expected when adopting FSE on a project that already has active session work.
+
+The components can be adopted independently, in any order:
+
+1. **Session numbering** — start using `Session N:` (or `[FSE] Session N:`) prefixes in commit messages going forward. No file moves required. Past commits stay as they are.
+2. **Artifact lifecycle** — create `/sessions/active/` and `/sessions/archive/` and place new session reports in Active. Existing reports stay where they are until the bedrock rename happens.
+3. **Bedrock rename** — rename `CLAUDE.md` → `FSE.md`, `SESSION_STATE.md` → `FSE_STATE.md`, `DISCOVERY_REPORT.md` → `FSE_DISCOVERY.md`. Add thin `CLAUDE.md` pointer. This is the heaviest step and touches every reference to bedrock files.
+4. **Session log table** — add the table to `FSE_STATE.md` (or `SESSION_STATE.md` if rename is deferred). Backfill historical sessions from git log per the clustering rule above.
+
+Adoption order is the project's call. The most common path is: components 1 and 2 first (additive, no risk), then components 3 and 4 at a natural break point (e.g., after a phase ships).
+
+Document the adoption state in `FSE_STATE.md` until the project is fully on FSE conventions:
+FSE Adoption State
+
+Session numbering: adopted from Session N forward
+Artifact lifecycle: adopted (sessions/ created)
+Bedrock rename: deferred until <break point>
+Session log table: deferred until bedrock rename
+
+
+Once all four components are adopted, remove the adoption state block.
+
 <!-- =================================================================== -->
 <!-- FSE END                                                             -->
 <!-- Everything below this line is project-specific.                     -->
