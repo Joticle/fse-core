@@ -166,6 +166,8 @@ For language-specific standing orders, anti-patterns, and module structures, see
 
 The .NET extension is the reference implementation. Extensions for the top 10 stacks are open for community contribution.
 
+The same repository also hosts **methodology extensions** — cross-cutting practices that any stack can adopt. The first is [`kpi`](https://github.com/Joticle/fse-extensions/tree/main/kpi), which adds session-level metrics capture (complexity scoring, drift moments, portfolio rollup aggregates). Methodology extensions are opt-in per project.
+
 ---
 
 ## What FSE Is Not
