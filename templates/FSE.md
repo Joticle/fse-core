@@ -132,6 +132,7 @@ These apply to every FSE project, regardless of stack.
 8. **Token-First Construction.** No UI ships without project-defined design tokens. Every visual CSS value — color, spacing, radius, shadow, font-size — must reference a token variable defined by the project (e.g., `--fse-*`, `--cc-*`, `--br-*`). Hard-coded literals (hex, rgb, named colors, raw px values) outside the project's token definition file are build-fails. Pre-existing violations are recorded in `fse-style-baseline.json` and resolved when the file is next modified — the baseline is a one-way ratchet that only shrinks.
 9. **Pattern-First Design.** No UI element is built in isolation. Before writing new component CSS or markup, consult `FSE_UI.md` for an existing pattern. If a pattern exists, it must be used. If a new pattern is required, it is proposed during the PLAN phase, added to `FSE_UI.md`, and only then implemented. The session does not close until `FSE_UI.md` reflects every component introduced.
 10. **Visual Validation Phase.** Every session that touches UI ends with a Visual Validation step inside VALIDATE. Each modified page is compared against the relevant patterns in `FSE_UI.md`. Any drift is either resolved before commit or recorded explicitly in `FSE_STATE.md` as accepted technical debt with justification. Visual validation is a named phase, not a habit.
+11. **Bedrock Authoring Guard.** When authoring or editing a foundation file, any section lacking an explicit human-provided decision is recorded in the file's OPEN DECISIONS block and never filled with a plausible default. A section with no decision is left explicitly open; it is not completed with an inferred or stack-conventional answer. A confabulated bedrock decision is more dangerous than a missing one — a gap gets noticed, an invented decision gets enforced by every session that follows. The operator clears the OPEN DECISIONS block over subsequent sessions; until a decision is cleared, no session treats the open section as ground truth.
 
 Stack-specific standing orders go in the "Project-Specific Standing Orders" section below, or in a stack extension file.
 
@@ -245,6 +246,13 @@ Once all four components are adopted, remove the adoption state block.
 <!-- FSE END                                                             -->
 <!-- Everything below this line is project-specific.                     -->
 <!-- =================================================================== -->
+
+================================================================
+OPEN DECISIONS — sections awaiting an explicit operator decision.
+Bedrock Authoring Guard: nothing below is ground truth until cleared.
+================================================================
+( none — all architecture sections carry an explicit decision )
+================================================================
 
 ## Project Identity
 

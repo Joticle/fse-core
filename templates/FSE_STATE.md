@@ -31,6 +31,10 @@ List anything blocking forward progress. Remove items once resolved.
 
 If there are no blockers, write: *None.*
 
+## Open Decisions
+
+Open decisions are recorded in `FSE.md`'s OPEN DECISIONS block; as each is cleared, the decision and the session that cleared it are noted here.
+
 ## Next Session Priorities
 
 Ordered list. The next session starts at the top.
