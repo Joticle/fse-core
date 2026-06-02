@@ -5,7 +5,7 @@ This file is updated at the end of every session. It is the single source of tru
 ## Identity
 
 - **Project:** [Project name]
-- **FSE Version:** 1.0
+- **FSE Version:** 1.0.0
 - **Last Updated:** [YYYY-MM-DD]
 - **Last Session By:** [Name / handle]
 
