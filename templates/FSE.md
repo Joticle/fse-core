@@ -110,7 +110,7 @@ Add a Tier 2 file when:
 - A category of rules is being repeated across sessions, or
 - A domain (UI, schema, security) warrants its own authoritative document.
 
-The ~15KB cap applies to bedrock methodology files (`FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md`, and other Tier 2 reference docs) — not to source code files. Source files split based on cohesion and module boundaries; methodology files split based on context-window cost.
+The ~15KB rule is a split trigger, not a hard cap on file size — it applies to bedrock methodology files (`FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md`, and other Tier 2 reference docs), not to source code files. Source files split based on cohesion and module boundaries; methodology files split based on context-window cost.
 
 ### Tier 3 — Optional / Aged-Out
 - **BUILD_LOG_*.md** — Long-form logs of significant builds or migrations.
