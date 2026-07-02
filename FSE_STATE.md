@@ -5,8 +5,8 @@ This file is updated at the end of every session. It is the single source of tru
 ## Identity
 
 - **Project:** fse-core — the FlowState Engineering methodology repository
-- **FSE Version:** 1.1.0
-- **Last Updated:** 2026-06-18
+- **FSE Version:** 1.2.0
+- **Last Updated:** 2026-07-01
 - **Last Session By:** Scott Michael Wilson
 
 ## Build State
@@ -61,10 +61,22 @@ N/A — no build. The gate is documentation integrity.
 |---------|------|-------|---------|--------|
 | SESSION_01 | 2026-06-08 | Adopt FSE self-hosting — author root `FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md` + `.claude/instructions.md` wiring | success | (no separate report — recorded inline under Session History) |
 | SESSION_02 | 2026-06-18 | Promote Planning Provenance to USO 12 — methodology v1.0.0 → v1.1.0 | success | (no separate report — recorded inline under Session History) |
+| SESSION_03 | 2026-07-01 | Promote Query Artifact Discipline to USO 13 — methodology v1.1.0 → v1.2.0 | success | (no separate report — recorded inline under Session History) |
 
 ## Session History
 
 Most recent session first. Each entry is short — the diff tells the story of *what*; this log captures *why*.
+
+---
+
+### SESSION_03 — 2026-07-01 — Promote Query Artifact Discipline to USO 13 (methodology v1.2.0)
+**Goal:** Inscribe the Query Artifact Discipline rule into the methodology constitution as Universal Standing Order 13.
+**Done:**
+- Filed the opening notification artifact `docs/methodology/query-artifact-discipline/NOTIFICATION-2026-07-01.md` before any methodology edit, per the notification-before-implementation standing order (commit a2bf0bf).
+- Added USO 13 (Query Artifact Discipline) to the Universal Standing Orders. No PLAN-phase mechanics and no template convention were added; this arc is a standing-order addition only.
+- Bumped `VERSION` 1.1.0 → 1.2.0 and tagged `v1.2.0` — editing the `FSE START … FSE END` block is a version event.
+**Reasoning:** Query Artifact Discipline closes query-artifact drift — the failure where, absent a rule, schema scripts land wherever the author last put one, queries are written inline at the call site, and cross-boundary reads look identical to same-boundary reads. The rule is three clauses: explicit, human-authored, versioned schema in one canonical location; centralized, named queries; and explicit marking of cross-boundary access. The discipline turns on the third clause — a seam that cannot be grepped cannot be governed. Core defines the principle; concrete file locations, naming grammar, language bindings, and boundary-marking syntax belong to each project's binding layer or stack extension. The change is additive and backward compatible, so a minor bump (1.1.0 → 1.2.0), not major. Stated in the abstract as a property of AI-assisted development, with no origin incident named — consistent with the notification artifact filed in a2bf0bf.
+**Next:** Carry-over remains open — fix the README `prompts/` path discrepancy; complete and land the parked S87 secret-scan WIP (`.gitignore` + `tooling/secret-scan/`); decide the DAOBoard inscription path.
 
 ---
 
