@@ -1,0 +1,22 @@
+# fse-core — repository ignore rules
+# This is a documentation/methodology repository: no build, no artifacts.
+# These rules keep local-only and secret-bearing files out of commits.
+
+# Machine-local Claude Code settings.
+# The AI wiring (.claude/instructions.md) stays tracked; only local settings are ignored.
+.claude/settings.local.json
+
+# Secret-scan local pattern files — A4/A5 material (retired-credential strings,
+# deploy profile names). Loaded at runtime by tooling/secret-scan/pre-push.sh.
+# Never committed. See tooling/secret-scan/README.md.
+.fse-secrets-patterns
+
+# Secret-scan test artifacts — planted, obviously-fake secrets used to validate
+# the hook. Untracked by construction so a test can never enter a commit.
+*.fse-test
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~

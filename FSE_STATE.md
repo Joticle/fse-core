@@ -6,7 +6,7 @@ This file is updated at the end of every session. It is the single source of tru
 
 - **Project:** fse-core — the FlowState Engineering methodology repository
 - **FSE Version:** 1.2.1
-- **Last Updated:** 2026-07-07
+- **Last Updated:** 2026-07-09
 - **Last Session By:** Scott Michael Wilson
 
 ## Build State
@@ -39,9 +39,9 @@ No decisions are currently open. The four SESSION_01 adoption decisions were mad
 
 ## Next Session Priorities
 
-1. Fix the README `prompts/ONBOARDING_PROMPT.md` discrepancy (tracked in `FSE_DISCOVERY.md`) — README references a non-existent `prompts/` directory; the file actually lives at `templates/ONBOARDING_PROMPT.md`.
-2. Add a `.gitignore` (tracked gap) so local files such as `.claude/settings.local.json` cannot be committed accidentally.
-3. Decide the DAOBoard inscription path — the Public Surface Discipline standing order is notified but not yet inscribed into the methodology block.
+1. Decide the DAOBoard inscription path — the Public Surface Discipline standing order (`docs/methodology/daoboard/NOTIFICATION-2026-05-17.md`) is notified but not yet inscribed. Session N+1 of the arc authors the schema + example and inscribes the standing order; it is a minor version event (→ 1.3.0) and needs explicit operator go.
+2. Refresh the public README to the current methodology — header still reads "version 1.0.0" (actual 1.2.1) and the "Universal Standing Orders" section lists only 7 orders (actual 13). Tracked in `FSE_DISCOVERY.md`.
+3. Audit fse-extensions content status (separate repository) — DAOBoard aggregator and .NET extension state (tracked gap).
 
 ## Warning Baseline
 
@@ -62,7 +62,8 @@ N/A — no build. The gate is documentation integrity.
 | SESSION_01 | 2026-06-08 | Adopt FSE self-hosting — author root `FSE.md`, `FSE_STATE.md`, `FSE_DISCOVERY.md` + `.claude/instructions.md` wiring | success | (no separate report — recorded inline under Session History) |
 | SESSION_02 | 2026-06-18 | Promote Planning Provenance to USO 12 — methodology v1.0.0 → v1.1.0 | success | (no separate report — recorded inline under Session History) |
 | SESSION_03 | 2026-07-01 | Promote Query Artifact Discipline to USO 13 — methodology v1.1.0 → v1.2.0 | success | (no separate report — recorded inline under Session History) |
-| SESSION_04 | 2026-07-07 | Single-interface terminology correction — retire "CLI invocation/session/run" from the methodology block; methodology v1.2.0 → v1.2.1 | success | (no separate report — recorded inline under Session History) |
+| SESSION_04 | 2026-07-09 | Single-interface terminology correction — retire "CLI invocation/session/run" from the methodology block; methodology v1.2.0 → v1.2.1 | success | (no separate report — recorded inline under Session History) |
+| SESSION_05 | 2026-07-09 | Clear parked queue — fix README `prompts/` path + structure; land S87 secret-scan (`.gitignore` + hook + README) | success | (no separate report — recorded inline under Session History) |
 
 ## Session History
 
@@ -70,7 +71,19 @@ Most recent session first. Each entry is short — the diff tells the story of *
 
 ---
 
-### SESSION_04 — 2026-07-07 — Single-interface terminology correction (methodology v1.2.1)
+### SESSION_05 — 2026-07-09 — Clear parked queue (README fix + land S87 secret-scan)
+**Goal:** Empty the standing carry-over queue: the README `prompts/` path discrepancy and the parked S87 secret-scan WIP.
+**Done:**
+- **README path/structure fix.** Corrected the dead `prompts/ONBOARDING_PROMPT.md` link to `templates/ONBOARDING_PROMPT.md`, and rewrote the "Repository Structure" block to match reality — added `docs/`, `VERSION`, the root self-hosting foundation files, and the four previously-omitted templates (`FSE_POLICE`, `FSE_PACKAGES`, `PATTERNS`, `FIELD_REPORT_TEMPLATE`).
+- **Landed S87 secret-scan.** Committed the previously-untracked `.gitignore` and `tooling/secret-scan/pre-push.sh`, and authored the missing `tooling/secret-scan/README.md` the `.gitignore` referenced (dangling reference resolved). The hook is a dependency-free pre-push secret scanner (Layer 1 deterministic hard-block B1–B6/A1–A5, Layer 2 entropy warn, `# fse-allow:` escape, value-position carve-outs). Verified by code inspection; the planted-fixture smoke test was declined this session and not run.
+- Closed the corresponding `FSE_DISCOVERY.md` gaps (`.gitignore` absent; README structure omissions) and checked the infrastructure-checklist `.gitignore` item.
+**Reasoning:** All three are documentation-integrity items, not methodology-block edits — no version event, `VERSION` stays 1.2.1. The README's *methodology-currency* staleness (header still says "version 1.0.0"; standing-orders section lists 7 of 13) is a larger content update than the tracked path/structure gap, so it was surfaced as a new `FSE_DISCOVERY.md` gap rather than silently expanded into.
+**DAOBoard (still open, not actioned):** The third queue item — inscribing the Public Surface Discipline standing order + schema from `docs/methodology/daoboard/NOTIFICATION-2026-05-17.md` — is the opening build session of a 7-session extension arc and a minor version event (→ 1.3.0). It requires an explicit operator decision on the inscription path and was left for a dedicated session.
+**Next:** Decide the DAOBoard inscription path; refresh the public README to the current methodology (version + full standing-orders list); audit fse-extensions content status.
+
+---
+
+### SESSION_04 — 2026-07-09 — Single-interface terminology correction (methodology v1.2.1)
 **Goal:** Retire tool-boundary–flavored language from the methodology block. The methodology's planning/execution separation is an approval gate, not a two-app tool boundary; the operator runs a single interface (Claude Code Desktop), one project per Holding tab.
 **Done:**
 - Swept `CLI invocation / CLI session / CLI run / CLI-generated` from the *Session Numbering & Artifact Lifecycle* section of both the root `FSE.md` and the published master `templates/FSE.md`. A session is now defined as "one complete assistant session," and identifiers "count sessions, not git operations." Wording kept tool-agnostic per USO contract (`README.md` — "works with Claude Code, Cursor, Copilot, Windsurf, Aider").

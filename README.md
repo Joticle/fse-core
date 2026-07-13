@@ -154,7 +154,7 @@ Follow the FSE protocol defined in FSE.md without exception.
 
 ### 5. Run your first session
 
-Paste the [onboarding prompt](prompts/ONBOARDING_PROMPT.md) into your AI assistant. It will run the FSE infrastructure check, read your foundation files, report current state, and tell you what to do next.
+Paste the [onboarding prompt](templates/ONBOARDING_PROMPT.md) into your AI assistant. It will run the FSE infrastructure check, read your foundation files, report current state, and tell you what to do next.
 
 You're running FSE.
 
@@ -188,15 +188,24 @@ The same repository also hosts **methodology extensions** — cross-cutting prac
 fse-core/
   README.md              ← you are here
   LICENSE                ← Apache 2.0
+  VERSION                ← methodology version (mirrored by a git tag)
   CONTRIBUTING.md        ← how to contribute
   CODE_OF_CONDUCT.md     ← Contributor Covenant
   SECURITY.md            ← security disclosure policy
-  templates/             ← drop these into your project root
-    FSE.md
+  FSE.md                 ← fse-core's own foundation files (it self-hosts under FSE)
+  FSE_STATE.md
+  FSE_DISCOVERY.md
+  templates/             ← copy these into your project root
+    FSE.md               ← Tier 1 (required)
     FSE_STATE.md
     FSE_DISCOVERY.md
-  prompts/               ← copy-paste prompts for AI sessions
-    ONBOARDING_PROMPT.md
+    FSE_POLICE.md        ← Tier 2 (add when needed)
+    FSE_PACKAGES.md
+    PATTERNS.md
+    FIELD_REPORT_TEMPLATE.md
+    ONBOARDING_PROMPT.md ← copy-paste prompt for the first AI session
+  docs/                  ← methodology extension notifications & specs
+    methodology/
   .github/               ← issue templates, PR template
 ```
 

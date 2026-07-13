@@ -32,7 +32,7 @@ Update this file only when a gap is closed or a new structural fact is discovere
 Items that do not apply to a documentation repository are marked **N/A** explicitly rather than left ambiguous.
 
 - [x] Version control in use (Git)
-- [ ] `.gitignore` covers secrets, build artifacts, and local environment files — **ABSENT** (gap; low impact — repo holds no secrets or build artifacts)
+- [x] `.gitignore` covers secrets, build artifacts, and local environment files — added SESSION_05 (ignores `.claude/settings.local.json`, the gitignored `.fse-secrets-patterns` local pattern file, and `*.fse-test` fixtures)
 - [x] `README.md` exists and describes the methodology and how to adopt it
 - [x] LICENSE present (Apache 2.0)
 - [x] CONTRIBUTING.md present
@@ -63,9 +63,7 @@ Items that do not apply to a documentation repository are marked **N/A** explici
 
 | Gap | Impact | Priority | Owner |
 |-----|--------|----------|-------|
-| README references `prompts/ONBOARDING_PROMPT.md` and a `prompts/` directory that do not exist; the file actually lives at `templates/ONBOARDING_PROMPT.md` | Broken path in the published README and Quick Start; new adopters hit a dead link | Med | Scott Michael Wilson |
-| README "Repository Structure" omits `docs/` and four shipped templates (`FSE_PACKAGES`, `FSE_POLICE`, `PATTERNS`, `FIELD_REPORT_TEMPLATE`) | Published structure understates what the repo actually ships | Low | Scott Michael Wilson |
-| No `.gitignore` | Local files (e.g. `.claude/settings.local.json`) can be committed accidentally | Low | Scott Michael Wilson |
+| README public methodology summary is a version behind — header still reads "version 1.0.0" (actual `VERSION` is 1.2.1) and the "Universal Standing Orders" section lists only 7 orders (actual USOs run to 13) | Public README understates the current methodology; a reader comparing the README to the live standing orders sees a mismatch | Med | Scott Michael Wilson |
 | fse-extensions content status not audited this session | DAOBoard aggregator and .NET extension state is unknown from within fse-core (separate repository) | Low | Scott Michael Wilson |
 
 Close a gap by fixing it and removing the row. Large gaps graduate to `FSE_STATE.md` as priorities.
