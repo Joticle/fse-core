@@ -39,9 +39,10 @@ No decisions are currently open. The four SESSION_01 adoption decisions were mad
 
 ## Next Session Priorities
 
-1. Pin-model USO promotion (notification-gated) — promote the pin/conformance model in `templates/FSE_CONFORMANCE.md` (added SESSION_06) to a standing order via a filed notification + version event. **This session MUST confirm/update the hardcoded raw fetch base `raw.githubusercontent.com/Joticle/fse-core`** if the org transfer to `Joticle-Git` has finalized — every holding's VERIFY fetch depends on that URL resolving.
-2. Decide the DAOBoard inscription path — the Public Surface Discipline standing order (`docs/methodology/daoboard/NOTIFICATION-2026-05-17.md`) is notified but not yet inscribed. Session N+1 of the arc authors the schema + example and inscribes the standing order; it is a minor version event (→ 1.3.0) and needs explicit operator go.
-3. Audit fse-extensions content status (separate repository) — DAOBoard aggregator and .NET extension state (tracked gap).
+1. **Build fse-doctor** (belongs in fse-extensions — tooling, so no methodology notification required). It is named throughout `templates/FSE_CONFORMANCE.md` as the parser/enforcer but is implemented nowhere (confirmed absent in both fse-core and fse-extensions, SESSION_08). Build it *before* promotion: writing the parser pressure-tests the `conformance_schema: 1` shape while it can still change cheaply, and it is the only planned artifact that moves conformance auditing off human vigilance and onto a program. Until it exists, `FSE_CONFORMANCE.md` costs reading time and enforces nothing.
+2. Pin-model USO promotion (notification-gated, version event) — promote the pin/conformance model to a standing order via a filed notification, **after** fse-doctor. Must inscribe the constraint that fse-core stays public (holdings fetch rules unauthenticated over raw). Fetch base resolved in SESSION_08 — no longer a blocker.
+3. Decide the DAOBoard inscription path — the Public Surface Discipline standing order (`docs/methodology/daoboard/NOTIFICATION-2026-05-17.md`) is notified but not yet inscribed. Session N+1 of the arc authors the schema + example and inscribes the standing order; it is a minor version event (→ 1.3.0) and needs explicit operator go.
+4. Audit fse-extensions content status (separate repository) — DAOBoard aggregator and .NET extension state (tracked gap). Partially answered in SESSION_08: no fse-doctor/conformance tooling exists there.
 
 ## Warning Baseline
 
@@ -66,10 +67,22 @@ N/A — no build. The gate is documentation integrity.
 | SESSION_05 | 2026-07-09 | Clear parked queue — fix README `prompts/` path + structure; land S87 secret-scan (`.gitignore` + hook + README) | success | (no separate report — recorded inline under Session History) |
 | SESSION_06 | 2026-07-09 | Add `templates/FSE_CONFORMANCE.md` — pin/conformance model spec + template (doc-only, no version event) | success | (no separate report — recorded inline under Session History) |
 | SESSION_07 | 2026-07-09 | Refresh public README — version 1.0.0 → 1.2.1, standing-orders list 7 → 13 (doc-only) | success | (no separate report — recorded inline under Session History) |
+| SESSION_08 | 2026-07-09 | Resolve pin-model fetch base → canonical `Joticle-Git/fse-core`; repoint local origin (doc-only) | success | (no separate report — recorded inline under Session History) |
 
 ## Session History
 
 Most recent session first. Each entry is short — the diff tells the story of *what*; this log captures *why*.
+
+---
+
+### SESSION_08 — 2026-07-09 — Resolve the pin-model fetch base (canonical org path)
+**Goal:** Close the load-bearing URL dependency recorded in SESSION_06 before it reached the promotion session.
+**Done:**
+- Verified the org transfer is complete: `Joticle-Git/fse-core` and `Joticle/fse-core` both resolve to the same commit, and raw at tag `v1.2.1` returns `1.2.1` (HTTP 200) on both bases — nothing was broken.
+- Repointed `templates/FSE_CONFORMANCE.md`'s fetch base to the canonical `raw.githubusercontent.com/Joticle-Git/fse-core`; repointed this repo's local `origin` to `https://github.com/Joticle-Git/fse-core.git`.
+**Reasoning:** The old base resolved only via GitHub's old-owner redirect. That redirect dies the moment a repo named `fse-core` is recreated under the still-existing `Joticle` account — and the failure mode is not a 404 anyone would notice, it is **silently serving a different repo's rules** to every holding's VERIFY. Pinning to the canonical path removes the redirect dependency entirely.
+**Load-bearing constraint (new, inscribed in the template):** The pin model requires fse-core to remain **public** — holdings fetch universal rules unauthenticated over raw. If fse-core ever goes private, every holding's VERIFY fetch 404s (the same class of failure that stalled the fse-website CI when its runner group excluded public repos). The promotion session should carry this constraint into the USO text.
+**Next:** Build fse-doctor before promoting. It is named throughout `FSE_CONFORMANCE.md` but exists in neither fse-core nor fse-extensions (both greped, zero hits) — until it exists the conformance file adds reading cost without adding enforcement.
 
 ---
 

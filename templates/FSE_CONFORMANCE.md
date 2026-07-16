@@ -36,7 +36,7 @@ deviations:
 
 - conformance_schema — Format version of this file itself, independent of fse_core_pin. Lets fse-doctor evolve parsing without breaking older holdings.
 - holding — Local holding identifier. Never a public value.
-- fse_core_pin — The exact fse-core tag this holding conforms to. Universal rules are fetched at this tag during VERIFY from the canonical raw source (raw.githubusercontent.com/Joticle/fse-core at the pinned tag). The gap between this pin and the latest fse-core tag is what fse-doctor reports.
+- fse_core_pin — The exact fse-core tag this holding conforms to. Universal rules are fetched at this tag during VERIFY from the canonical raw source (raw.githubusercontent.com/Joticle-Git/fse-core at the pinned tag). fse-core must remain public: holdings fetch unauthenticated, so making it private breaks every holding's VERIFY. The gap between this pin and the latest fse-core tag is what fse-doctor reports.
 - last_rebase — UTC date the holding last adopted a core version via the rebase ritual.
 - last_doctor — UTC date of the last fse-doctor structural pass.
 - bindings — The per-holding choices that universal rules leave open. Authoritative. This is where drift dies: a binding is a recorded choice a linter enforces, not a thing each holding reinvents.
