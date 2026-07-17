@@ -39,8 +39,8 @@ No decisions are currently open. The four SESSION_01 adoption decisions were mad
 
 ## Next Session Priorities
 
-1. **Build fse-doctor** (belongs in fse-extensions — tooling, so no methodology notification required). It is named throughout `templates/FSE_CONFORMANCE.md` as the parser/enforcer but is implemented nowhere (confirmed absent in both fse-core and fse-extensions, SESSION_08). Build it *before* promotion: writing the parser pressure-tests the `conformance_schema: 1` shape while it can still change cheaply, and it is the only planned artifact that moves conformance auditing off human vigilance and onto a program. Until it exists, `FSE_CONFORMANCE.md` costs reading time and enforces nothing.
-2. Pin-model USO promotion (notification-gated, version event) — promote the pin/conformance model to a standing order via a filed notification, **after** fse-doctor. Must inscribe the constraint that fse-core stays public (holdings fetch rules unauthenticated over raw). Fetch base resolved in SESSION_08 — no longer a blocker.
+1. **Pin-model USO promotion** (notification-gated, version event) — promote the pin/conformance model to a standing order via a filed notification. Both blockers are now cleared: fetch base resolved (SESSION_08) and fse-doctor built + schema validated (SESSION_09). Must inscribe: (a) fse-core stays **public** — holdings fetch rules unauthenticated over raw; (b) `tooling/fse-doctor/` is the enforcer, version-locked to the schema by the same pin.
+2. Wire fse-doctor as a gate in a pilot holding — add `FSE_CONFORMANCE.md` to one holding and run fse-doctor in CI or a `pre-push` hook (alongside `secret-scan`). Until a holding actually runs it, the model is validated but unadopted.
 3. Decide the DAOBoard inscription path — the Public Surface Discipline standing order (`docs/methodology/daoboard/NOTIFICATION-2026-05-17.md`) is notified but not yet inscribed. Session N+1 of the arc authors the schema + example and inscribes the standing order; it is a minor version event (→ 1.3.0) and needs explicit operator go.
 4. Audit fse-extensions content status (separate repository) — DAOBoard aggregator and .NET extension state (tracked gap). Partially answered in SESSION_08: no fse-doctor/conformance tooling exists there.
 
@@ -68,10 +68,26 @@ N/A — no build. The gate is documentation integrity.
 | SESSION_06 | 2026-07-09 | Add `templates/FSE_CONFORMANCE.md` — pin/conformance model spec + template (doc-only, no version event) | success | (no separate report — recorded inline under Session History) |
 | SESSION_07 | 2026-07-09 | Refresh public README — version 1.0.0 → 1.2.1, standing-orders list 7 → 13 (doc-only) | success | (no separate report — recorded inline under Session History) |
 | SESSION_08 | 2026-07-09 | Resolve pin-model fetch base → canonical `Joticle-Git/fse-core`; repoint local origin (doc-only) | success | (no separate report — recorded inline under Session History) |
+| SESSION_09 | 2026-07-13 | Build fse-doctor — conformance validator + pin drift + structural pass (`tooling/fse-doctor/`) | success | (no separate report — recorded inline under Session History) |
 
 ## Session History
 
 Most recent session first. Each entry is short — the diff tells the story of *what*; this log captures *why*.
+
+---
+
+### SESSION_09 — 2026-07-13 — Build fse-doctor (conformance validator + structural pass)
+**Goal:** Build the enforcement half of the pin model *before* promoting it, so writing the parser pressure-tests `conformance_schema: 1` while it can still change cheaply.
+**Done:**
+- Added `tooling/fse-doctor/fse-doctor.sh` + `README.md`. Three layers: **schema** (parse/validate the fenced yaml, enums, ledger hygiene — FAIL), **pin drift** (fetch fse-core tags, report releases behind; nonexistent pin FAILs — WARN), **structural** (USO-01 stubs, USO-08 token-first using the `css_prefix` binding, USO-13 sql layout grammar per the `sql_layout` binding, `tier2_present` claims — FAIL). Deviation `scope:` globs suppress findings, but only for the USO named in `rule:`.
+- Zero dependencies (bash/awk/sed/grep/git/curl), matching the `tooling/secret-scan` precedent and fse-core's no-build identity.
+- **Placed in fse-core, not fse-extensions** (reversing the earlier assumption): the parser and schema must stay version-locked, so one pin (`fse_core_pin: v1.2.1`) fetches the rules *and* the matching enforcer. A separately-versioned parser would reintroduce the drift the model exists to kill. fse-extensions is also 100% markdown with no bedrock — an executable there would be a first.
+- Validated against fixture holdings, 8 cases: violations caught (hex, raw px, bad SQL verb, TODO), token-definition file correctly exempt, scope-glob suppression working, pin drift correct live against canonical fse-core (`v1.0.0` → "3 releases behind"), nonexistent pin FAILs, schema/enum/ledger failures FAIL, missing file exits 2, clean holding exits 0.
+**Schema verdict (the reason for build-before-promote):** `conformance_schema: 1` survived contact with a parser — no shape changes needed. It is safe to freeze in the promotion session.
+**Bug caught by testing:** the first glob→regex translator passed globs through `sed`, which broke on `{}` inside a bracket expression and silently disabled **all** scope suppression — the mechanism that makes the deviation ledger load-bearing. Rewritten as a pure-bash char-by-char translator. Had this shipped unbuilt, every scoped deviation would have been decorative.
+**Scope guard:** Tooling only. `FSE.md` unchanged, `VERSION` unchanged (1.2.1), no USO added, no version event.
+**Honest limit:** Only USO-01/08/13 are mechanically checkable (USO-07 is covered by `tooling/secret-scan`). The other nine are process rules no linter can audit — a green fse-doctor run is not a claim the protocol was followed.
+**Next:** Pin-model USO promotion (notification-gated). Must inscribe the fse-core-stays-public constraint and reference fse-doctor as the enforcer.
 
 ---
 
